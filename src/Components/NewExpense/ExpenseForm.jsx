@@ -1,10 +1,11 @@
 import "./ExpenseForm.css";
 import { useState } from "react";
 
-const ExpenseForm = ({onSaveExpenseData}) => {
+const ExpenseForm = ({ onSaveExpenseData }) => {
     const [enteredTitle, setEnteredTitle] = useState("");
     const [enteredAmount, setEnteredAmount] = useState("");
     const [enteredDate, setEnteredDate] = useState("");
+    const [formOpened, setFormOpened] = useState(false);
 
     const titleChangeHandler = (event) => {
         setEnteredTitle(event.target.value);
@@ -21,14 +22,30 @@ const ExpenseForm = ({onSaveExpenseData}) => {
         event.preventDefault();
         const expenseData = {
             title: enteredTitle,
-            amount: enteredAmount,
+            amount: +enteredAmount,
             date: new Date(enteredDate)
         };
         onSaveExpenseData(expenseData);
         setEnteredTitle("");
         setEnteredAmount("");
         setEnteredDate("");
-;    }
+        setFormOpened(false);
+    }
+
+    const openFormHandler = () => {
+        setFormOpened(true);
+    };
+
+    const closeFormHandler = () => {
+        setFormOpened(false);
+    };
+
+    if (!formOpened) {        
+        return (
+        <div className="new-expense__closed">       
+            <button onClick={openFormHandler}>Add New Expense</button>
+        </div>);
+    }
 
     return (
         <form onSubmit={submitHandler}>
@@ -47,6 +64,7 @@ const ExpenseForm = ({onSaveExpenseData}) => {
                 </div>
             </div>
             <div className="new-expense__actions">
+                <button type="button" onClick={closeFormHandler}>Cancel</button>
                 <button type="submit">Add Expense</button>
             </div>
         </form>
