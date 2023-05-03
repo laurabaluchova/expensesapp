@@ -42,7 +42,8 @@ const ExpenseForm = ({ onSaveExpenseData }) => {
 
     if (!formOpened) {        
         return (
-        <div className="new-expense__closed">       
+        <div className="new-expense__closed">
+            <h1>Expenses Handler</h1>     
             <button onClick={openFormHandler}>Add New Expense</button>
         </div>);
     }
